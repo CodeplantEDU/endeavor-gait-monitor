@@ -1,0 +1,2 @@
+# Deploy only from vercel_site via scripts/deploy_vercel.ps1
+**/*

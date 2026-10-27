@@ -1,0 +1,17 @@
+{
+  "name": "endeavor-gait-monitor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ENDEAVOR smart-shoe BLE monitoring and CSV-based AI gait reports",
+  "license": "MIT",
+  "engines": {"node": ">=24"},
+  "scripts": {
+    "build": "python -X utf8 scripts/build_vercel.py",
+    "dev": "npm run build && node --env-file-if-exists=.env.local scripts/dev-server.cjs",
+    "test": "node --test tests/protocol.test.mjs tests/analysis.test.mjs tests/research.test.mjs tests/auto-report.test.mjs tests/csv-analysis.test.mjs",
+    "test:python": "python -X utf8 -m unittest discover -s tests -p test_*.py",
+    "test:browser": "node --env-file-if-exists=.env.local tests/csv-browser-check.cjs",
+    "check:public": "python -X utf8 scripts/check_public_repo.py"
+  },
+  "devDependencies": {"playwright": "1.62.1"}
+}

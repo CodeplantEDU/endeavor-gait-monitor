@@ -1,0 +1,5 @@
+# Optional: scripts that generate synthetic demo PDF/DOCX files.
+reportlab>=4,<5
+python-docx>=1,<2
+Pillow>=10,<13
+pypdf>=5,<8
