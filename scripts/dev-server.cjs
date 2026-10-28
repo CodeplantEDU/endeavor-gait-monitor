@@ -3,7 +3,7 @@ const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../vercel_site/public'),port=Number(process.env.EARLYBIRD_QA_PORT||8774);
 const codeFile=path.resolve(__dirname,'../output/AI_ACCESS_CODE.txt');
 if(!process.env.EARLYBIRD_AI_ACCESS_CODE&&fs.existsSync(codeFile))process.env.EARLYBIRD_AI_ACCESS_CODE=fs.readFileSync(codeFile,'utf8').trim();
-const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.ttf':'font/ttf'};
+const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.ttf':'font/ttf','.webp':'image/webp'};
 http.createServer(async(req,res)=>{try{const url=new URL(req.url,'http://127.0.0.1:'+port);if(url.pathname==='/api/ai-analyze'){
  let bytes=0,body='';for await(const part of req){bytes+=part.length;if(bytes>3000000){res.writeHead(413);res.end();return;}body+=part;}
  req.body=JSON.parse(body||'null');res.status=s=>{res.statusCode=s;return res;};res.json=d=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(d));};const {default:handler}=await import('../api/ai-analyze.mjs');await handler(req,res);return;

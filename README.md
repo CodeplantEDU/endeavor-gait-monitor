@@ -2,7 +2,7 @@
 
 ESP32 스마트 슈즈의 **앞·뒤 FSR과 MPU6500 자세각**을 BLE로 수집하고, **CSV를 정제해 GPT-6.1 Terra가 보행 기록 리포트를 작성**하는 CODEPLANT 프로젝트입니다.
 
-**[서비스 열기](https://earlybird-gait-monitor.vercel.app/#analysis)** · **[Codex에 붙여 넣는 프롬프트](docs/CODEX_PROMPTS.md)** · **[구조와 데이터 흐름](docs/ARCHITECTURE.md)** · **[배포 방법](docs/DEPLOYMENT.md)**
+**[ENDEAVOR 소개](https://earlybird-gait-monitor.vercel.app/#home)** · **[대시보드 열기](https://earlybird-gait-monitor.vercel.app/#dashboard)** · **[Codex에 붙여 넣는 프롬프트](docs/CODEX_PROMPTS.md)** · **[구조와 데이터 흐름](docs/ARCHITECTURE.md)** · **[배포 방법](docs/DEPLOYMENT.md)**
 
 이 저장소에는 웹 UI, 브라우저 저장소, Python/SQLite 서버, OpenAI API 함수, ESP32 INO와 필수 헤더, 테스트, 실행·배포 스크립트가 포함됩니다. 개인 측정 기록·기존 API 키·운영 AI 이용 코드는 포함하지 않습니다.
 

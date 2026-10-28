@@ -12,11 +12,11 @@ const fs=require('node:fs');const path=require('node:path');
  const post=async(url,payload)=>{const result=await page.evaluate(async({url,payload})=>{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});return{status:r.status,body:await r.json()};},{url,payload});assert.equal(result.status,200,JSON.stringify(result.body));return result.body;};
  const state=async()=>page.evaluate(async p=>(await fetch('/api/platform?participant='+p)).json(),participant);
  const saved=async text=>page.waitForFunction(t=>document.getElementById('platform-notice').textContent.includes(t),text);
- await page.goto(base);await page.waitForFunction(()=>document.querySelectorAll('[data-nav]').length===9&&document.getElementById('home-total')?.textContent==='0회');
+ await page.goto(base+'/#dashboard');await page.waitForFunction(()=>document.querySelectorAll('[data-nav]').length===10&&document.getElementById('home-total')?.textContent==='0회');
  await page.waitForFunction(()=>document.getElementById('participant')?.disabled===false&&document.getElementById('home-score')?.textContent==='—/100');
  eq(await page.locator('#view-title').innerText(),'홈 대시보드');eq(await page.locator('#home-score').innerText(),'—/100');
  await page.locator('#participant').fill(participant);await page.locator('#participant').dispatchEvent('change');await page.waitForFunction(p=>document.getElementById('notice').textContent.includes(p),participant);
- for(const view of ['measurement','analysis','trends','reports','medications','chat','sharing','care','home']){await go(view);eq(await page.locator('[data-nav="'+view+'"]').getAttribute('aria-current'),'page');}
+ for(const view of ['measurement','analysis','trends','reports','medications','chat','sharing','care','dashboard']){await go(view);eq(await page.locator('[data-nav="'+view+'"]').getAttribute('aria-current'),'page');}
  await page.evaluate(()=>{const banner=document.createElement('p');banner.className='research-note';banner.id='qa-banner';banner.textContent='QA 합성 기록으로 검증한 화면 · 실제 보행·복약·진료 자료가 아닙니다.';document.querySelector('.page-title').after(banner);});
  await go('reports');await page.locator('#report-form button[type=submit]').click();await saved('기록이 없습니다');eq(await page.locator('#platform-dialog').isVisible(),false);
  await go('medications');const med=page.locator('#medication-form');await med.locator('[name=name]').fill('QA 테스트 복약');await med.locator('[name=dose_note]').fill('시험용 메모 · 실제 약이 아님');await med.locator('[name=times]').fill('08:00, 13:00');await med.locator('[type=submit]').click();await saved('복약 일정을 등록');
@@ -39,7 +39,7 @@ const fs=require('node:fs');const path=require('node:path');
  }
  await page.reload();await page.waitForFunction(()=>document.getElementById('home-total')?.textContent==='3회');
  await page.evaluate(()=>{const banner=document.createElement('p');banner.className='research-note';banner.textContent='QA 합성 기록으로 검증한 화면 · 실제 보행·복약·진료 자료가 아닙니다.';document.querySelector('.page-title').after(banner);});
- await go('home');eq(await page.locator('#home-med').innerText(),'1/ 2회');eq(await page.locator('#home-score').innerText(),'60/100');await page.screenshot({path:path.join(out,'home-synthetic.png'),fullPage:true});
+ await go('dashboard');eq(await page.locator('#home-med').innerText(),'1/ 2회');eq(await page.locator('#home-score').innerText(),'60/100');await page.screenshot({path:path.join(out,'home-synthetic.png'),fullPage:true});
  await go('trends');eq(await page.locator('#trend-table tr').count(),3);eq(await page.locator('#trend-chart circle').count(),3);await page.locator('#trend-metric').selectOption('pitch_range');await page.locator('#trend-apply').click();eq(await page.locator('#trend-chart circle').count(),3);
  const csvPromise=page.waitForEvent('download');await page.locator('#trend-export').click();await (await csvPromise).saveAs(path.join(out,'trend-synthetic.csv'));ok(fs.readFileSync(path.join(out,'trend-synthetic.csv'),'utf8').includes('R_interval_cv'));await page.screenshot({path:path.join(out,'trends-synthetic.png'),fullPage:true});
  await go('reports');await page.locator('#report-form button[type=submit]').click();await page.locator('#platform-dialog').waitFor({state:'visible'});ok((await page.locator('#platform-dialog-content').innerText()).includes('70.0 /100'));eq((await state()).reports.length,1);
@@ -59,6 +59,6 @@ const fs=require('node:fs');const path=require('node:path');
  await page.setViewportSize({width:375,height:812});await page.locator('#menu-toggle').click();eq(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');await page.locator('[data-nav="home"]').click();eq(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
  await page.locator('#menu-toggle').click();await page.keyboard.press('Escape');eq(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');eq(await page.locator('#sidebar').evaluate(el=>el.inert),true);
  for(const view of Object.keys({home:1,measurement:1,analysis:1,trends:1,reports:1,medications:1,chat:1,sharing:1,care:1})){await page.evaluate(v=>earlybirdNavigate(v),view);eq(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);}
- await page.evaluate(()=>earlybirdNavigate('home'));await page.screenshot({path:path.join(out,'home-mobile-empty.png'),fullPage:true});eq(errors.length,0);ok(requests.every(url=>url.startsWith(base+'/')));
+ await page.evaluate(()=>earlybirdNavigate('dashboard'));await page.screenshot({path:path.join(out,'home-mobile-empty.png'),fullPage:true});eq(errors.length,0);ok(requests.every(url=>url.startsWith(base+'/')));
  const result={syntheticOnly:true,checks,menuCount:9,pageErrors:errors,allHttpRequestsLocal:true,reportPdf:'report-synthetic.pdf',externalDeliveryPerformed:false,realMedicationOrCarePerformed:false};fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify(result,null,2));console.log('PASS_PLATFORM_UI',JSON.stringify(result));await browser.close();
 })().catch(e=>{console.error(e);process.exit(1);});

@@ -21,6 +21,11 @@ for relative in files:
         continue
     if file.suffix == '.csv' and relative.parts[0] != 'examples':
         failures.append((str(relative), 'unapproved CSV location'))
+    if relative.as_posix() in {f'dist/assets/intro/{name}.webp' for name in ('shoe', 'prototype', 'building', 'poster', 'dashboard')}:
+        raw = file.read_bytes()
+        if len(raw) > 2_000_000 or raw[:4] != b'RIFF' or raw[8:12] != b'WEBP':
+            failures.append((str(relative), 'invalid image asset'))
+        continue
     if file.suffix == '.ttf':
         if relative.as_posix() not in {'dist/assets/Pretendard-Regular.ttf', 'dist/assets/Pretendard-Bold.ttf'}:
             failures.append((str(relative), 'unapproved binary asset'))

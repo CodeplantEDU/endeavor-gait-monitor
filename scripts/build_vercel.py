@@ -8,7 +8,7 @@ TARGET = ROOT / 'vercel_site'
 PUBLIC = TARGET / 'public'
 PUBLIC.mkdir(parents=True, exist_ok=True)
 for source in (ROOT / 'dist').rglob('*'):
-    if source.is_file() and (source.suffix in {'.html', '.mjs', '.css', '.ttf'} or source.name == 'Pretendard-LICENSE.txt'):
+    if source.is_file() and (source.suffix in {'.html', '.mjs', '.css', '.ttf', '.webp'} or source.name == 'Pretendard-LICENSE.txt'):
         destination = PUBLIC / source.relative_to(ROOT / 'dist')
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
