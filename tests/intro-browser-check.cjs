@@ -4,7 +4,7 @@ const base=process.env.EARLYBIRD_QA_URL||'http://127.0.0.1:8774';
 const out=path.resolve('output/intro_20261028');fs.mkdirSync(out,{recursive:true});
 (async()=>{const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:950},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
- await page.goto(base+'/#home');await page.locator('.intro-hero h1').waitFor();
+ await page.goto(base+'/#home');await page.locator('.intro-hero h1').waitFor();await page.getByRole('heading',{name:'파킨슨병과 마주한 가족의 경험에서.'}).waitFor({state:'attached'});
  assert.equal(await page.locator('[data-view-panel="home"]').isVisible(),true);
  assert.equal(await page.locator('[data-view-panel="dashboard"]').isVisible(),false);
  assert.ok(!(await page.locator('.intro').innerText()).toLowerCase().includes('early-bird'));
