@@ -11,8 +11,8 @@ try{
  assert.equal(await page.locator('.intro-header a[href="#dashboard"]').count(),1);
  await page.locator('.intro-header [data-intro-scroll="intro-process"]').click();
  assert.equal(await page.evaluate(()=>location.hash),'#home');
- await page.locator('.intro-poster summary').click();await page.locator('.intro-poster img').scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.querySelector('.intro-poster img').naturalWidth>0);
- await page.locator('.intro-poster summary').click();await page.evaluate(()=>scrollTo(0,0));
+ await page.locator('.intro-photo-pair').scrollIntoViewIfNeeded();await page.waitForFunction(()=>[...document.querySelectorAll('.intro-photo-pair img')].every(img=>img.naturalWidth>0));
+ assert.equal(await page.locator('.intro-poster').count(),0);await page.evaluate(()=>scrollTo(0,0));
  await page.screenshot({path:path.join(out,'desktop-home.png'),fullPage:true});
  await page.locator('.intro-header a[href="#dashboard"]').click();await page.waitForFunction(()=>location.hash==='#dashboard');
  await page.locator('[data-view-panel="dashboard"]').waitFor({state:'visible'});

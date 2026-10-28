@@ -75,7 +75,10 @@ export const intro = `
   <div class="intro-wrap intro-section" id="intro-direction">
     <div class="intro-heading"><div><span class="intro-kicker">앞으로의 방향</span><h2>개인의 걸음에서<br>지역의 돌봄으로.</h2></div><p>착용 편의와 데이터 품질을 개선하고, 현장의 의견을 바탕으로 활용 가능성을 검토해 나갑니다.</p></div>
     <div class="intro-direction-grid"><div><h3>개인과 보호자</h3><p>보행 기록과 리포트를 일상 속 변화 확인과 상담 준비에 활용합니다.</p></div><div><h3>의료·복지 현장</h3><p>지역 시설과의 협력을 통해 착용성, 데이터 품질, 현장 활용 방식을 검토할 계획입니다.</p></div><div><h3>지속 가능한 모델</h3><p>스마트 슈즈와 개인 기록 서비스에서 기관용 분석 플랫폼으로의 확장을 구상합니다.</p></div></div>
-    <details class="intro-poster"><summary>제작 포스터 보기 <span aria-hidden="true">+</span></summary><p>제공된 기획 포스터 원본입니다. 일부 센서·플랫폼 설명은 현재 구현과 다를 수 있습니다.</p><a href="assets/intro/poster.webp" target="_blank" rel="noopener"><img src="assets/intro/poster.webp" loading="lazy" alt="ENDEAVOR 스마트 슈즈 구성과 개발 방향을 정리한 제작 포스터"></a></details>
+    <div class="intro-photo-pair" aria-label="시제품과 센서 회로 사진">
+      <figure><img src="assets/intro/shoe-prototype.webp" loading="lazy" alt="센서와 배터리를 연결한 스마트 슈즈 시제품"><figcaption>센서와 제어부를 연결한 스마트 슈즈 시제품 · 제공 신청서</figcaption></figure>
+      <figure><img src="assets/intro/sensor-circuit.webp" loading="lazy" alt="센서와 배선을 연결해 시험하는 회로"><figcaption>센서 회로 연결 및 시험 과정 · 제공 신청서</figcaption></figure>
+    </div>
   </div>
 
   <div class="intro-final"><div class="intro-wrap intro-final-inner"><div><span>ENDEAVOR</span><h2>오늘의 걸음이<br>내일의 기록이 됩니다.</h2><p>보행의 작은 변화를 대시보드에서 확인해 보세요.</p></div><a class="intro-button intro-button-light" href="#dashboard">대시보드 바로가기 <span aria-hidden="true">↗</span></a></div></div>
